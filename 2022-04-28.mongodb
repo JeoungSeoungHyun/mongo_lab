@@ -1,0 +1,42 @@
+use("blog");
+// 필드가 있으면 업데이트 없으면 생성
+// db.users.update({"id":1},{$set:{"username":"hong"}});
+// db.users.update({"id":1},{$set:{"email":"hong@nate.com"}});
+// upsert가 false이면 찾는정보가 없는경우 생성 x true이면 생성 o
+// db.users.update({"id":4},{$set:{"email":"hong@nate.com"}},{upsert:true});
+
+// 여러개 한번에 업데이트하기
+// db.users.update({"email":"ssar1@nate.com"},{$set:{"email":"ssar@nate.com"}},{multi:true})
+
+// 필드 날리기
+// db.users.update({"id":4},{$unset:{"email":"ssar@nate.com"}});
+
+// 도큐먼트 삭제
+// db.users.remove({"id":2})
+
+// 모든 도큐먼트 삭제
+// db.users.remove({});
+
+// 컬렉션 삭제
+// db.users.drop();
+
+db.users.find();
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+// 카운트하기
+// db.users.find().count();
+
+// 정렬하기 (true = 1(오름차순), false = -1(내림차순))
+// db.users.find().sort({"id":-1});
+
+// 제한걸기
+// db.users.find().limit(2)
+// 적은 순서대로 실행되는것이 아니라 정해진 실행순서가 있는것같다. 따라서 원하는 결과를
+// 만들어 내기 위해서는 파이프라인 같은것을 사용해줘야 한다.
+// db.users.find().limit(2).sort({id:-1})
+// db.users.find().sort({id:-1}).limit(2)
+
+// 스킵하기
+// db.users.find().skip(1);

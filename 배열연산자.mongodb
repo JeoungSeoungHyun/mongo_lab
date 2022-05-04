@@ -1,0 +1,63 @@
+use("blog")
+
+// 배열 연산자
+
+// db.food.insertOne({_id:1, fruit: ["apple", "banana", "peach"]});
+// db.food.insertOne({_id:2, fruit: ["apple", "kumquat", "orange"]});
+// db.food.insertOne({_id:3, fruit: ["cherry", "banana", "apple"]});
+// db.food.insertOne({_id:4, fruit: ["cherry", "raspberry", "peach"]});
+
+// db.food.find({_id:1})
+
+// db.food.find({fruit: [
+//   "apple",
+//   "banana",
+//   "peach"
+// ]})
+
+// 포함하고 있는것
+// db.food.find({fruit:{$all:["apple"]}});
+
+// 둘 다 포함하고 있는것
+// db.food.find({fruit:{$all:["apple","banana"]}});
+
+// 둘 중에 하나라도
+// db.food.find({fruit:{$in:["apple","banana"]}});
+
+// push 배열 내 요소 추가
+// db.food.updateOne({_id:2},{$push:{fruit:"rasberry"}})
+
+// pull 배열 내 요소 제거
+// db.food.updateOne({_id:2},{$pull:{fruit:"rasberry"}})
+
+//
+// db.post.insertOne({_id:1, replys : [
+//     {id:1, content:"내용1", userId: 1},
+//     {id:2, content:"내용2", userId: 1},
+//     {id:3, content:"내용3", userId: 2},
+// ]});
+// db.post.insertOne({_id:2, replys : [
+//     {id:4, content:"내용4", userId: 1},
+//     {id:5, content:"내용5", userId: 1},
+//     {id:6, content:"내용6", userId: 2},
+// ]});
+
+// db.food.find()
+// db.post.find({"replys.id":4})
+
+// userId가 1인 부분만 찾는게 불가능
+// db.post.find({"replys.userId":1})
+
+// 배열내부의 문서의 여러 필드를 검색할때
+// db.post.find(
+//   {replys: {$elemMatch:{id:4,userId:1}}}
+// )
+
+// $elemMatch 배열내 여러필드를 조건 걸어서 찾을 때
+// 필드에 $는 위치 연산자
+db.post.find(
+  {
+    replys: {$elemMatch:{id:4,userId:1}},
+  },
+  {"replys.$":true}
+);

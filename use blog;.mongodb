@@ -1,0 +1,47 @@
+use("blog");
+
+// db.users.insertOne({id:1, username:"ssar"});
+// db.users.insertOne({id:2, username:"cos"});
+// db.users.insertOne({id:3, username:"love"});
+
+// 1. 특정 데이터 찾기
+// db.users.find({id:1});
+
+// 2. 특정 조건으로 찾기
+// db.users.find({id:{$gt:1}}); // gt는 크다
+// db.users.find({id:{$lt:3}}); // lt는 작다
+// db.users.find({id:{$gte:1}}); // gte는 크거나 같다
+// db.users.find({id:{$lte:3}}); // lte는 작거나 같다
+
+// 3. or, in
+// db.users.find({$or:[{id:1},{id:2}]});
+// db.users.find({$or:[{id:1},{username:"cos"}]});
+// db.users.find({id:{$in:[1,2]}});
+
+// 4. and
+// db.users.find({$and:[{id:1},{username:"ssar"}]}); //여러개의 오브젝트 가능
+// db.users.find({id:1,username:"ssar"}) // 하나의 오브젝트 가능
+
+// 5. 객체 연결 연산 키 값에 ""이 필요하다. 그냥 json형태처럼 키값에는 전부 ""를 넣도록하자.
+// db.posts.find({"user.id":1});
+
+// 6. 해당 데이터의 값이 존재하는지 안찾는지 확인하여 찾아준다 true=1 , false=0
+// db.posts.find({user:{$exists:1}});
+
+// 7. 네거티브 (부정 => !,$not  같지않다 => !=,$ne)
+// db.users.find({id:{$ne:1}});
+// db.users.find({id:{$not:{$ne:1}}}); //조건을 부정할 때는 not을 사용한다.
+
+// 8. 함수 만들기
+// let f = function(){
+//     let result = db.users.findOne({id:1});
+//     return result.username;
+// }
+
+// f();
+
+// db.posts.find({"user.id":1});
+
+// 9. 결과 받아서 다시 find 하기
+// let result = db.users.findOne({"username":"ssar"});
+// db.posts.find({"user.id":result.id});
