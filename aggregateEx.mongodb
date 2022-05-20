@@ -1,0 +1,162 @@
+// var persons1 = {
+//    _id: 1,
+//    username : "ssar",
+//    posts : [
+//      {id:1, title:"제목1", content:"내용1"},
+//      {id:2, title:"제목2", content:"내용2"},
+//      {id:3, title:"제목3", content:"내용3"},
+//    ]
+// }
+
+// var persons2 = {
+//    _id: 2,
+//    username : "cos",
+//    posts : [
+//      {id:1, title:"제목1", content:"내용1"},
+//      {id:2, title:"제목2", content:"내용2"},
+//      {id:3, title:"제목3", content:"내용3"},
+//    ]
+// }
+
+// db.persons.insertOne(persons1);
+// db.persons.insertOne(persons2);
+
+// db.persons.find()
+
+// unwid는 배열 전개 표현식!!
+// db.persons.aggregate(
+//   [
+//     {$match:{_id:1}},
+//     // 배열안에 있는걸 빼낸다.
+//     {$unwind:"$posts"},
+//     {$project:{
+//       _id: 0,
+//       username: 1,
+//       // 찾을 때 $연산자를 사용?
+//       postId:"$posts.id",
+//       title:"$posts.title",
+//       content:"$posts.content",
+//     }}
+//   ]
+// )
+
+// db.persons.aggregate(
+//   [
+//     {$match:{_id:1}},
+//     {$project:{
+//       _id:1,
+//       username:1,
+//       posts:1
+//     }
+//     }
+//   ]
+// )
+
+// db.persons.aggregate(
+//   [
+//     {$match:{}},
+//     {$project:{
+//       _id:0,
+//       username:1,
+//       new:{
+//         $filter:{
+//           input: "$posts",
+//           as: "p",
+//           cond: {$eq: ["$$p.id",{$max:"$posts.id"}]}
+//         }
+//       }
+//     }}
+//   ]
+// )
+
+// $는 제일 위에 필드를 찾을 때 사용하는 것
+// db.persons.aggregate(
+//   [
+//     {$match:{}},
+//     {$project:{
+//       _id:0,
+//       username:1,
+//       new:{
+//         $filter:{
+//           input: "$posts",
+//           as: "p",
+//           cond: {$eq: ["$$p.title","제목3"]}
+//         }
+//       }
+//     }}
+//   ]
+// )
+
+// db.persons.aggregate(
+//   [
+//     {$match:{}},
+//     {$project:{
+//       _id:0,
+//       username:1,
+//       maxPostId:{$max:"$posts.id"}
+//     }}
+//   ]
+// )
+
+// db.persons.aggregate(
+//   [
+//     {$match:{_id:1}},
+//     {$project:{
+//       _id:0,
+//       username:1,
+//       username:0,
+//       new:{
+//         $filter:{
+//           input:"$posts",
+//           as:"p",
+//           cond:{$gt:["$$p.id", 1]}
+//         }
+//       }
+//     }}
+//   ]
+// )
+
+// match(일치)=>where, projection(선출)=>column선출
+//, sort(정렬), skip(건너띄기), limit(제한)
+
+db.persons.aggregate(
+  [
+  {$match:{_id:1}},
+  {$unwind:"$posts"},
+  {$project:{
+    _id:0,
+    username:0
+  }},
+  {$match:{$in:{}}}
+  ]
+)
+
+// db.persons.aggregate(
+//   [
+//     {$match:{_id:1}},
+//     {$project:{
+//       _id:0,
+//       new:{
+//         $filter:{
+//           input:"$posts",
+//           as:"p",
+//           cond:{$eq:["$$p.id", 2]}
+//         }
+//       }
+//     }}
+//   ]
+// )
+
+// db.persons.aggregate(
+//   [
+//     {$match:{_id:1}},
+//     // 배열안에 있는걸 빼낸다.
+//     {$unwind:"$posts"},
+//     {$project:{
+//       _id: 0,
+//       postId:"$posts.id",
+//       title:"$posts.title",
+//       content:"$posts.content",
+//     }}
+//   ]
+// )

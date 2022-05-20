@@ -1,0 +1,21 @@
+// use('cosdb');/
+
+// for(let i=1; i<21;i++){
+//   db.users.insertOne({"i":i,"username":"user" + i,"age":12});
+// }
+
+// 집계함수 : aggregate -> 파이프라인 -> 도큐먼트 스트림
+// match(일치)=>where, projection(선출)=>column선출
+//, sort(정렬), skip(건너띄기), limit(제한)
+// db.users.find({i:1});
+// _id는 디폴트로 나오기때문에 0을 넣어 false라고 명시해줘야한다.
+// db.users.aggregate([{$match:{i:1}}, {$project:{_id:0,i:true,username:1}}]);
+
+// 효율적인 순서를 상황에 따라 생각해서 사용
+// db.users.aggregate([{$match:{age:12}},{$limit:5}, {$project:{_id:0,i:true,username:1}}]);
+
+// 내림차순 -1 오름차순 1
+// db.users.aggregate([{$match:{age:12}},{$limit:5},{$sort:{"username":1}}, {$project:{_id:0,i:true,username:1}}]);
+
+// 건너띄기
+db.users.aggregate([{$match:{age:12}},{$skip:3},{$limit:5},{$sort:{"username":1}}, {$project:{_id:0,i:true,username:1}}]);
